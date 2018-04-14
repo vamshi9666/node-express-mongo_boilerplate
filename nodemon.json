@@ -1,5 +1,6 @@
 {
     "env": {
-        "DB":"mongodb://nodeuser:nodepass@ds217349.mlab.com:17349/gtrack"
+        "DB":"mongodb://nodeuser:nodepass@ds217349.mlab.com:17349/gtrack",
+        "PORT": "3001"
     }
 }
