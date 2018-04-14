@@ -21,6 +21,7 @@ app.use((req, res, next) => {
     next();
 });
 app.use('/plans', plansRoutes);
+app.use('/members', membersRoutes);
 
 app.use((req, res, next) => {
     const err = new Error('Not Found');

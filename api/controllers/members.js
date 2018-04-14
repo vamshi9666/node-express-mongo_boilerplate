@@ -1,22 +1,26 @@
 const mongoose = require("mongoose");
-const Plan = require("../models/plan");
+const Member = require("../models/member");
 
-exports.plans_get_all = (req, res, next) => {
-    Plan.find()
-    .select("name fees comments _id")
+exports.members_get_all = (req, res, next) => {
+    Member.find()
+    .select("name dateofbirth gender mobile email comments planid _id")
     .exec()
     .then(docs => {
         const response = {
             count: docs.length,
-            plans: docs.map(doc => {
+            members: docs.map(doc => {
               return {
                 _id: doc._id,
                 name: doc.name,
-                fees: doc.fees,
+                dateofbirth: doc.dateofbirth,
+                gender: doc.gender,
+                mobile: doc.mobile,
+                email: doc.email,
                 comments: doc.comments,
+                planid: doc.planid,
                 request: {
                   type: "GET",
-                  url: "http://localhost:3001/plans/" + doc._id
+                  url: "http://localhost:3001/members/" + doc._id
                 }
               };
             })
@@ -31,31 +35,39 @@ exports.plans_get_all = (req, res, next) => {
     });
 };
 
-exports.plans_create_plan = (req, res, next) => {
+exports.members_create_member = (req, res, next) => {
     console.log(req.body);
-    const plan = new Plan({
+    const member = new Member({
         _id: new mongoose.Types.ObjectId(),
         name: req.body.name,
-        fees: req.body.fees,
-        frequency: req.body.frequency,
-        maxdiscount: req.body.maxdiscount,
+        dateofbirth: req.body.dateofbirth,
+        gender: req.body.gender,
+        mobile: req.body.mobile,
+        email: req.body.email,
         comments: req.body.comments,
-        validuntil: req.body.validuntil,
-        neverexpires: req.body.neverexpires
+        address1: req.body.address1,
+        city: req.body.city,
+        state: req.body.state,
+        countryid: req.body.countryid,
+        planid: req.body.planid,
+        documentid: req.body.documentid,
+        documentno: req.body.documentno,
+        status: req.body.status
       });
-      plan
+      member
         .save()
         .then(result => {
             console.log(result);
             res.status(201).json({
-              message: "Created plan successfully",
-              createdPlan: {
+              message: "Created member successfully",
+              createdMember: {
                   _id: result._id,
                   name: result.name,
-                  fees: result.fees,
+                  mobile: result.mobile,
+                  planid: result.planid,
                   request: {
                       type: 'GET',
-                      url: "http://localhost:3001/plans/" + result._id
+                      url: "http://localhost:3001/members/" + result._id
                   }
               }
             });
@@ -68,19 +80,19 @@ exports.plans_create_plan = (req, res, next) => {
         });
 };
 
-exports.plans_get_plan = (req, res, next) => {
-    const id = req.params.planId;
-    Plan.findById(id)
-    .select('name fees comments _id')
+exports.members_get_member = (req, res, next) => {
+    const id = req.params.memberId;
+    Member.findById(id)
+    .select('name dateofbirth gender mobile email comments planid _id')
     .exec()
     .then(doc => {
       console.log("From database", doc);
       if (doc) {
         res.status(200).json({
-            plan: doc,
+            member: doc,
             request: {
                 type: 'GET',
-                url: 'http://localhost:3001/plans'
+                url: 'http://localhost:3001/members'
             }
         });
       } else {
@@ -95,20 +107,20 @@ exports.plans_get_plan = (req, res, next) => {
     });
 };
 
-exports.plans_update_plan = (req, res, next) => {
-    const planId = req.params.planId;
+exports.members_update_member = (req, res, next) => {
+    const memberId = req.params.memberId;
     const updateOps = {};
     for (const ops of req.body) {
       updateOps[ops.propName] = ops.value;
     }
-    Plan.update({ _id: planId }, { $set: updateOps })
+    Member.update({ _id: memberId }, { $set: updateOps })
       .exec()
       .then(result => {
         res.status(200).json({
-            message: 'Plan updated',
+            message: 'Member updated',
             request: {
                 type: 'GET',
-                url: 'http://localhost:3001/plans/' + id
+                url: 'http://localhost:3001/members/' + id
             }
         });
       })
@@ -120,17 +132,17 @@ exports.plans_update_plan = (req, res, next) => {
       });
   };
 
-exports.plans_delete_plan = (req, res, next) => {
-    const planId = req.params.planId;
-    Plan.remove({ _id: planId })
+exports.members_delete_member = (req, res, next) => {
+    const memberId = req.params.memberId;
+    Member.remove({ _id: memberId })
     .exec()
     .then(result => {
         res.status(200).json({
-            message: 'Plan deleted',
+            message: 'Member deleted',
             request: {
                 type: 'POST',
-                url: 'http://localhost:3001/plans',
-                body: { name: 'String', fees: 'Number' , comments: 'String' }
+                url: 'http://localhost:3001/members',
+                body: { name: 'String', dateofbirth: 'Date' , mobile: 'Number' }
             }
         });
       })
