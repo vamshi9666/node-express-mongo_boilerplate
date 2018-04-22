@@ -5,6 +5,7 @@ const mongoose = require('mongoose');
 const app = express();
 const plansRoutes = require('./api/routes/plans');
 const membersRoutes = require('./api/routes/members');
+const smsRoutes = require('./api/routes/sms');
 
 mongoose.connect(process.env.DB,{});
 
@@ -22,6 +23,7 @@ app.use((req, res, next) => {
 });
 app.use('/plans', plansRoutes);
 app.use('/members', membersRoutes);
+app.use('/sms', smsRoutes);
 
 app.use((req, res, next) => {
     const err = new Error('Not Found');

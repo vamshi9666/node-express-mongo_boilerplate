@@ -26,18 +26,18 @@ const SMSVendorStatusSchema = mongoose.Schema({
 
 const SMSLogSchema = mongoose.Schema({
     _id: mongoose.Schema.Types.ObjectId,
-    smstype: { type: String, required: true },
-    internalrefno: { type: String, required: true },
-    message: { type: String, required: true },
     mobile: { type: String, required: true },
-    vendorid: { type: String, required: true },
-    vendorrefno: { type: String, required: true },
+    message: { type: String, required: true },
+    smstype: { type: String},
+    internalrefno: { type: String},
+    vendorid: { type: String},
+    vendorrefno: { type: String},
     vendorstatusid: { type: Number },
     noofretries: { type: String },
-    requestpayload: { type: String, required: true },
-    responsepayload: { type: String, required: true },
-    createdby: { type: String, required: true },
-    createddate: { type: String, required: true }
+    requestpayload: { type: String},
+    responsepayload: { type: String},
+    createdby: { type: String},
+    createddate: { type: String}
 });
 
 module.exports = mongoose.model('SMSMessaageTemplate', SMSMessaageTemplateSchema);
