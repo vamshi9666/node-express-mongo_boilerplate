@@ -7,7 +7,8 @@ const plansRoutes = require('./api/routes/plans');
 const membersRoutes = require('./api/routes/members');
 const smsRoutes = require('./api/routes/sms');
 
-mongoose.connect(process.env.DB,{});
+// mongoose.connect(process.env.DB,{});
+mongoose.connect('mongodb://nodeuser:nodepass@ds217349.mlab.com:17349/gtrack',{});
 
 app.use(morgan('dev'));
 app.use(bodyParser.urlencoded({extended: false}));
