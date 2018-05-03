@@ -7,6 +7,7 @@ const plansRoutes = require('./api/routes/plans');
 const membersRoutes = require('./api/routes/members');
 const smsRoutes = require('./api/routes/sms');
 const staffRoutes = require('./api/routes/staff')
+const expensesRoutes = require('./api/routes/expenses')
 
 // mongoose.connect(process.env.DB,{});
 mongoose.connect('mongodb://nodeuser:nodepass@ds217349.mlab.com:17349/gtrack',{});
@@ -27,6 +28,7 @@ app.use('/plans', plansRoutes);
 app.use('/members', membersRoutes);
 app.use('/sms', smsRoutes);
 app.use('/staff',staffRoutes)
+app.use('/expenses',expensesRoutes)
 app.use((req, res, next) => {
     const err = new Error('Not Found');
     err.status = 404;

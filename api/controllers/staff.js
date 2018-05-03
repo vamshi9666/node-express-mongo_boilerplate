@@ -44,7 +44,7 @@ exports.staff_get_by_id= (req,res,next)=>{
     }
     else{
         res.status(404).json({
-            message : "no valid staff are recorded in database. \n please try with another id "
+            message : "no valid staff are recorded in database.  please try with another id "
         })
     }
     })
@@ -82,11 +82,11 @@ exports.staff_add = (req,res,next)=>{
 }
 exports.staff_update = (req,res,next)=>{
     const id = req.params.id;
-    const updates ={};
-    for(const changes in req.body){
-        updates[changes.propname]=changes.value
+    const updateOps = {};
+    for (const ops of req.body) {
+      updateOps[ops.propName] = ops.value;
     }
-    Staff.update({_id:id},{$set:updates})
+    Staff.update({_id:id},{$set:updateOps})
     .then(result=>{
         res.status(200).json({
             message:"employee updated !",
