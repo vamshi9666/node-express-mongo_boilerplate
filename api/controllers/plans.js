@@ -131,7 +131,8 @@ exports.plans_delete_plan = (req, res, next) => {
                 type: 'POST',
                 url: 'http://localhost:3001/plans',
                 body: { name: 'String', fees: 'Number' , comments: 'String' }
-            }
+            },
+            result:result
         });
       })
     .catch(err => {

@@ -1,7 +1,8 @@
 const mongoose = require('mongoose');
+const AutoIncrement = require('mongoose-sequence')(mongoose);
 
 const expenseSchema = mongoose.Schema({
-    _id:mongoose.Schema.Types.ObjectId,
+    _id:{type:Number},
     fromDate:{
         type:String,
         required:true
@@ -23,5 +24,6 @@ const expenseSchema = mongoose.Schema({
     }
 
 })
+expenseSchema.plugin(AutoIncrement, {inc_field: '_id'})
 
 module.exports = mongoose.model('expenses',expenseSchema);

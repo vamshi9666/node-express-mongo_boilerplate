@@ -61,7 +61,7 @@ exports.staff_add = (req,res,next)=>{
         phone:req.body.phone,
         email:req.body.email,
         aadhaar_number:req.body.aadhaar_number,
-        PAN:req.body.PAN,            
+        PAN:req.body.PAN,
     });
     staff.save()
     .then(result =>{
@@ -69,13 +69,13 @@ exports.staff_add = (req,res,next)=>{
         console.log(result);
         res.status(200).json({
             message: "employee created !",
-            created_employee: result 
+            created_employee: result
         })
     })
     .catch(err=>{
         console.log(err);
         res.status(301).json({
-            message:"error in saving ! \n please try again.",
+            message:"error in saving !  please try again.",
             error :err
         })
     })
@@ -83,7 +83,7 @@ exports.staff_add = (req,res,next)=>{
 exports.staff_update = (req,res,next)=>{
     const id = req.params.id;
     const updateOps = {};
-    for (const ops of req.body) {
+    for (const ops of req.body ) {
       updateOps[ops.propName] = ops.value;
     }
     Staff.update({_id:id},{$set:updateOps})
