@@ -24,6 +24,6 @@ const expenseSchema = mongoose.Schema({
     }
 
 })
-expenseSchema.plugin(AutoIncrement, {inc_field: '_id'})
+expenseSchema.plugin(AutoIncrement)
 
 module.exports = mongoose.model('expenses',expenseSchema);

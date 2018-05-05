@@ -3,7 +3,6 @@ const mongoose = require('mongoose')
 
 exports.expenses_add = (req,res,next)=>{
     const expenses = new Expenses({
-        _id:new mongoose.Types.ObjectId(),
         fromDate:req.body.fromDate,
         toDate:req.body.toDate,
         type:req.body.type,
