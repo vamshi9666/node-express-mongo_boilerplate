@@ -1,7 +1,10 @@
 const mongoose = require('mongoose');
+const autoIncrement = require('mongoose-auto-increment');
+var connection = mongoose.createConnection("mongodb://nodeuser:nodepass@ds217349.mlab.com:17349/gtrack");
+
+autoIncrement.initialize(connection);
 
 const memberSchema = mongoose.Schema({
-    _id: mongoose.Schema.Types.ObjectId,
     name: { type: String, required: true },
     dateofbirth: { type: Date, required: true },
     gender: { type: String, required: true },
@@ -25,5 +28,5 @@ const memberSchema = mongoose.Schema({
     documentno: { type: String, required: true },
     status: { type: Number, required: true },
 });
-
+memberSchema.plugin(autoIncrement.plugin, 'Member');
 module.exports = mongoose.model('Member', memberSchema);

@@ -52,7 +52,6 @@ exports.staff_get_by_id= (req,res,next)=>{
 }
 exports.staff_add = (req,res,next)=>{
     const staff = new Staff({
-        _id: new mongoose.Types.ObjectId(),
         name: req.body.name,
         age: req.body.age,
         gender:req.body.gender,

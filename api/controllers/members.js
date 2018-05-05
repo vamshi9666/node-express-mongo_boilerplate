@@ -38,7 +38,6 @@ exports.members_get_all = (req, res, next) => {
 exports.members_create_member = (req, res, next) => {
     console.log(req.body);
     const member = new Member({
-        _id: new mongoose.Types.ObjectId(),
         name: req.body.name,
         dateofbirth: req.body.dateofbirth,
         gender: req.body.gender,

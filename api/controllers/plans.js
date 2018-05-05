@@ -34,7 +34,6 @@ exports.plans_get_all = (req, res, next) => {
 exports.plans_create_plan = (req, res, next) => {
     console.log(req.body);
     const plan = new Plan({
-        _id: new mongoose.Types.ObjectId(),
         name: req.body.name,
         fees: req.body.fees,
         frequency: req.body.frequency,
