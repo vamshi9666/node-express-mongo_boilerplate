@@ -1,5 +1,4 @@
 const Expenses = require('../models/expenses');
-const mongoose = require('mongoose')
 
 exports.expenses_add = (req,res,next)=>{
     const expenses = new Expenses({

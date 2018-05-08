@@ -8,6 +8,7 @@ const membersRoutes = require('./api/routes/members');
 const smsRoutes = require('./api/routes/sms');
 const staffRoutes = require('./api/routes/staff');
 const expensesRoutes = require('./api/routes/expenses');
+const feePaymentRoutes = require('./api/routes/fee_payment') 
 
 
 // mongoose.connect(process.env.DB,{});
@@ -37,6 +38,7 @@ app.use('/members', membersRoutes);
 app.use('/sms', smsRoutes);
 app.use('/staff',staffRoutes);
 app.use('/expenses',expensesRoutes);
+app.use('/fee',feePaymentRoutes)
 app.use((req, res, next) => {
     const err = new Error('Not Found');
     err.status = 404;
