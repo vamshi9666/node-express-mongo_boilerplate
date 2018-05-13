@@ -31,8 +31,8 @@ exports.attendance_add = (req,res,next)=>{
 	.then(result=>{
 		res.status(200).json(
 			{message:"attendance record created !",
-						created_result:result
-						})
+			 created_result:result
+		})
 
 	})
 	.catch(err=>{
