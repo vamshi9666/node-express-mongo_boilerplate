@@ -8,7 +8,7 @@ endpoints.md
 # dependencies
 /node_modules
 #nodemon
-/nodemon.json
+nodemon.json
 # IDEs and editors
 /.idea
 .project
