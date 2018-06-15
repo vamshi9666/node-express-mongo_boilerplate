@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 
 const autoIncrement = require('mongoose-auto-increment');
-var connection = mongoose.createConnection("mongodb://nodeuser:nodepass@ds217349.mlab.com:17349/gtrack");
+var connection = mongoose.createConnection("mlab link");
 
 autoIncrement.initialize(connection);
 
