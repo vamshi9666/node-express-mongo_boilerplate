@@ -4,7 +4,7 @@ endpoints.md
 /dist
 /tmp
 /out-tsc
-
+.evn
 # dependencies
 /node_modules
 #nodemon

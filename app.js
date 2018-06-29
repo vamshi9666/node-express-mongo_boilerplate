@@ -1,4 +1,5 @@
 const express = require('express');
+const dotenv = require('dotenv').config() //loads .env file into process.env
 const morgan = require('morgan');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
@@ -13,7 +14,7 @@ const attendanceRoutes = require('./api/routes/attendance')
 
 
 // mongoose.connect(process.env.DB,{});
-mongoose.connect('mongodb://nodeuser:nodepass@ds217349.mlab.com:17349/gtrack',{});
+mongoose.connect(process.env.DB);
 //database error handling
 const connection = mongoose.connection;
 connection.on('open',()=>{

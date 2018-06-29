@@ -4,13 +4,14 @@
   "description": "Api for gt",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon server.js"
+    "start": "echo \"Error: no start specified\" && exit 1",
+    "test": "nodemon server.js"
   },
   "author": "Saif-Amer",
   "license": "ISC",
   "dependencies": {
     "body-parser": "^1.18.2",
+    "dotenv": "^6.0.0",
     "express": "^4.16.3",
     "mongoose": "^5.0.14",
     "mongoose-auto-increment": "^5.0.1",
