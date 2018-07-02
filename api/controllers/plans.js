@@ -57,7 +57,7 @@ exports.plans_create_plan = (req, res, next) => {
           if(res.session){
             console.log(req.session);
           }
-            req.session.plan = result
+            req.session.user = result
             console.log(result);
             res.status(201).json({
               message: "Created plan successfully",
