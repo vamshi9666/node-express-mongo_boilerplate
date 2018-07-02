@@ -1,8 +1,9 @@
 const mongoose = require('mongoose');
 
 const autoIncrement = require('mongoose-auto-increment');
-var connection = mongoose.createConnection("mlab link");
 
+const dotenv = require('dotenv').config() //loads .env file into process.env
+const  connection = mongoose.createConnection(process.env.DB);
 autoIncrement.initialize(connection);
 
 const planSchema = mongoose.Schema({

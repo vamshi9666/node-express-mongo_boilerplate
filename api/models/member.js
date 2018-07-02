@@ -1,6 +1,8 @@
 const mongoose = require('mongoose');
 const autoIncrement = require('mongoose-auto-increment');
-var connection = mongoose.createConnection("mlab link")
+
+const dotenv = require('dotenv').config() //loads .env file into process.env
+const  connection = mongoose.createConnection(process.env.DB);
 autoIncrement.initialize(connection);
 
 const memberSchema = mongoose.Schema({
@@ -8,10 +10,10 @@ const memberSchema = mongoose.Schema({
     dateofbirth: { type: Date, required: true },
     gender: { type: String, required: true },
     mobile: { type: Number, required: true },
-    email: { 
-        type: String,  
-        required: true, 
-        unique: true, 
+    email: {
+        type: String,
+        required: true,
+        unique: true,
         match: /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/
     },
     comments: { type: String, required: true },
