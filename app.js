@@ -70,33 +70,7 @@ app.use((req, res, next) => {
     }
     next();
 });
-app.post('/login',(req,res,next)=>{
-	const user = {
-		name: req.body.name,
-		age:req.body.age
-	}
-	req.session.user = user
-	if(req.session.user){
-		res.redirect('/plans')
-	}
-	else{
-		res.status(302).json({
-			message:"error "
-		})
-	}
-})
-app.get('/users',(req,res,next)=>{
-	if(req.session.user){
-		res.status(200).json({
-			data:req.session.user
-		})
-	}else{
 
-		res.status(404).json({
-			message:" no users found"
-		})
-	}
-})
 app.use('/plans', plansRoutes);
 app.use('/members', membersRoutes);
 app.use('/sms', smsRoutes);
