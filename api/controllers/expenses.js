@@ -1,29 +1,29 @@
 const Expenses = require('../models/expenses');
 
-exports.expenses_add = (req,res,next)=>{
-    const expenses = new Expenses({
-        fromDate:req.body.fromDate,
-        toDate:req.body.toDate,
-        type:req.body.type,
-        amount:req.body.amount,
-        comments:req.body.comments  
+exports.expenses_add = (req, res, next) => {
+  const expenses = new Expenses({
+    fromDate: req.body.fromDate,
+    toDate: req.body.toDate,
+    type: req.body.type,
+    amount: req.body.amount,
+    comments: req.body.comments
+  })
+  expenses.save()
+    .then(result => {
+      const response = {
+        fromDate: result.fromDate,
+        toDate: result.toDate,
+        type: result.type,
+        amount: result.amount,
+        comments: result.comments
+      }
+      res.status(200).json({
+        message: "expenses created !",
+        created_expenses: response
+      })
     })
-    expenses.save()
-    .then(result=>{
-        const response = {
-            fromDate:result.fromDate,
-            toDate:result.toDate,
-            type:result.type,
-            amount:result.amount,
-            comments:result.comments
-        }
-        res.status(200).json({
-            message:"expenses created !",
-            created_expenses: response
-        })
-    })
-    .catch(err=>{
-        res.status(200).json(err)
+    .catch(err => {
+      res.status(200).json(err)
     })
 }
 exports.expenses_update =(req,res,next)=>{
@@ -38,29 +38,28 @@ exports.expenses_update =(req,res,next)=>{
         res.status(200).json({
             message:"updated expenses !",
             updated_expenses:result
-            
         })
     })
     .catch(err=>{
         res.status(200).json(err)
     })
 }
-exports.expenses_delete=(req,res,next)=>{
-    const id = req.params.id;
-    Expenses.remove({_id:id})
+exports.expenses_delete = (req, res, next) => {
+  const id = req.params.id;
+  Expenses.remove({
+      _id: id
+    })
     .exec()
-    .then(result=>{
-        if(result.n==='1'){
-            res.status(200).json({
-                message:"expenses removed successfully !"
-
-            })
-        }
-        else{
-            res.status(300).json({
-                message:"something went wrong in deleting expenses .please try again "
-            })
-        }
+    .then(result => {
+      if (result.n === '1') {
+        res.status(200).json({
+          message: "expenses removed successfully !"
+        })
+      } else {
+        res.status(300).json({
+          message: "something went wrong in deleting expenses .please try again "
+        })
+      }
     })
 
 }

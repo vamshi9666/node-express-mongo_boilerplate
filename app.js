@@ -97,39 +97,40 @@ app.post('/signup', (req, res, next) => {
     }
   })
 })
+app.post('/login', (req, res, next) => {
+  User.find({
+      userName: req.body.username
+    })
+    .then(result => {
+      console.log(result)
+      if (result.length < 1) {
+        return res.status(301).json({
+          message: "Error in authentication"
+        })
+      }
+      bcrypt.compare(req.body.password, result[0].password, (err, doc) => {
 
-app.post('/login',(req,res,next)=>{
-	User.find({userName:req.body.username})
-			.then(result=>{
-				console.log(result)
-				if(result.length < 1 ){
-					return res.status(301).json({
-						message:"Error in authentication"
-					})
-				}
-				bcrypt.compare(req.body.password,result[0].password,(err,doc)=> {
-
-					if(err){
-						console.log(err);
-						return res.status(201).json({
-							message: " error in authentication",
-							erroe:err
-						})
-					}
-					if(doc){
-						return res.status(200).json({
-							message: "user authenticated successfully !"
-						})
-					}
-				})
-			})
-			.catch(err=>{
-				console.log(err)
-				res.status(201).json({
-					message: " error in authentication",
-					error:err
-				})
-			})
+        if (err) {
+          console.log(err);
+          return res.status(201).json({
+            message: " error in authentication",
+            erroe: err
+          })
+        }
+        if (doc) {
+          return res.status(200).json({
+            message: "user authenticated successfully !"
+          })
+        }
+      })
+    })
+    .catch(err => {
+      console.log(err)
+      res.status(201).json({
+        message: " error in authentication",
+        error: err
+      })
+    })
 })
 app.use('/plans', plansRoutes);
 app.use('/members', membersRoutes);
