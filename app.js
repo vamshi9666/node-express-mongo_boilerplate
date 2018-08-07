@@ -13,6 +13,8 @@ const expensesRoutes = require('./api/routes/expenses');
 const feePaymentRoutes = require('./api/routes/fee_payment')
 const attendanceRoutes = require('./api/routes/attendance')
 const bcrypt = require('bcrypt')
+const jwt = require('jsonwebtoken')
+const auth = require('./api/middlewares/auth')
 //for sessison
 const session = require('express-session')
 const cookieParser = require('cookie-parser');
@@ -30,9 +32,6 @@ redisClient.on('error',(err)=>{
 
 //signup and login
 const User = require('./api/models/user')
-
-
-
 // mongoose.connect(process.env.DB,{});
 mongoose.connect(process.env.DB);
 //database error handling
@@ -65,7 +64,6 @@ app.use(session({
 }))
 
 app.use((req, res, next) => {
-	console.log(req.session);
     res.header('Access-Control-Allow-Origin','*');
     res.header('Access-Control-Allow-Headers','Origin, X-Requested-With, Content-Type, Accept, Authorization');
     if(req.method === 'OPTIONS') {
@@ -109,7 +107,6 @@ app.post('/login', (req, res, next) => {
         })
       }
       bcrypt.compare(req.body.password, result[0].password, (err, doc) => {
-
         if (err) {
           console.log(err);
           return res.status(201).json({
@@ -118,8 +115,15 @@ app.post('/login', (req, res, next) => {
           })
         }
         if (doc) {
-          return res.status(200).json({
-            message: "user authenticated successfully !"
+          const token = jwt.sign({
+            userName: req.body.username
+          }, process.env.JWT_KEY, {
+            expiresIn: "1h"
+          })
+					 return res.status(200).json({
+            message: "user authenticated successfully !",
+						session:req.session,
+						token:token
           })
         }
       })
@@ -131,8 +135,8 @@ app.post('/login', (req, res, next) => {
         error: err
       })
     })
-})
-app.use('/plans', plansRoutes);
+});
+app.use('/plans',auth , plansRoutes);
 app.use('/members', membersRoutes);
 app.use('/sms', smsRoutes);
 app.use('/staff',staffRoutes);
@@ -154,4 +158,4 @@ app.use((error,req, res, next) => {
     });
 })
 
-module.exports = app;
+module.exports = app

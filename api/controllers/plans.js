@@ -2,7 +2,6 @@ const mongoose = require("mongoose");
 const Plan = require("../models/plan");
 
 exports.plans_get_all = (req, res, next) => {
-  if(req.session.user){
     Plan.find()
     .select("name fees comments _id")
     .exec()
@@ -30,13 +29,6 @@ exports.plans_get_all = (req, res, next) => {
         error: err
       });
     });
-  }
-  else{
-    res.status(404).json({
-      message:"login expired"
-    })
-  }
-
 };
 
 exports.plans_create_plan = (req, res, next) => {
