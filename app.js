@@ -1,4 +1,5 @@
 const express = require('express');
+const router = express.Router();
 const dotenv = require('dotenv').config() //loads .env file into process.env
 const morgan = require('morgan');
 const bodyParser = require('body-parser');
@@ -11,12 +12,12 @@ const staffRoutes = require('./api/routes/staff');
 const expensesRoutes = require('./api/routes/expenses');
 const feePaymentRoutes = require('./api/routes/fee_payment')
 const attendanceRoutes = require('./api/routes/attendance')
-
+const bcrypt = require('bcrypt')
 //for sessison
 const session = require('express-session')
 const cookieParser = require('cookie-parser');
 const redisStore = require('connect-redis')(session);
-const redisClient = require('redis').createClient('redis://redis-15520.c13.us-east-1-3.ec2.cloud.redislabs.com:15520',{
+const redisClient = require('redis').createClient(process.env.REDIS,{
 	password: 'test'
 })
 
@@ -26,6 +27,9 @@ redisClient.on('connect',()=>{
 redisClient.on('error',(err)=>{
 	console.log("Error in connecting to redis store !"+err);
 })
+
+//signup and login
+const User = require('./api/models/user')
 
 
 
@@ -70,7 +74,63 @@ app.use((req, res, next) => {
     }
     next();
 });
+app.post('/signup', (req, res, next) => {
+  bcrypt.hash(req.body.password, 10, (err, hash) => {
+    if (err) {
+      console.log(err);
+      res.status(500).json({
+        message: " error in signup controller ",
+        error: err
+      })
+    } else {
+      const user = new User({
+        userName: req.body.username,
+        password: hash
+      })
+			user.save()
+					.then(result=>{
+						res.status(200).json({
+							message:" user created !",
+							data: result
+						})
+					})
+    }
+  })
+})
 
+app.post('/login',(req,res,next)=>{
+	User.find({userName:req.body.username})
+			.then(result=>{
+				console.log(result)
+				if(result.length < 1 ){
+					return res.status(301).json({
+						message:"Error in authentication"
+					})
+				}
+				bcrypt.compare(req.body.password,result[0].password,(err,doc)=> {
+
+					if(err){
+						console.log(err);
+						return res.status(201).json({
+							message: " error in authentication",
+							erroe:err
+						})
+					}
+					if(doc){
+						return res.status(200).json({
+							message: "user authenticated successfully !"
+						})
+					}
+				})
+			})
+			.catch(err=>{
+				console.log(err)
+				res.status(201).json({
+					message: " error in authentication",
+					error:err
+				})
+			})
+})
 app.use('/plans', plansRoutes);
 app.use('/members', membersRoutes);
 app.use('/sms', smsRoutes);
