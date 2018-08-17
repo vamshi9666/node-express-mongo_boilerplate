@@ -30,48 +30,45 @@ exports.plans_get_all = (req, res, next) => {
       });
     });
 };
-
 exports.plans_create_plan = (req, res, next) => {
-    console.log(req.body);
-    const plan = new Plan({
-        name: req.body.name,
-        fees: req.body.fees,
-        frequency: req.body.frequency,
-        maxdiscount: req.body.maxdiscount,
-        comments: req.body.comments,
-        validuntil: req.body.validuntil,
-        neverexpires: req.body.neverexpires
-      })
-
-        plan
-        .save()
-        .then(result => {
-          if(res.session){
-            console.log(req.session);
+  console.log(req.body);
+  const plan = new Plan({
+    name: req.body.name,
+    fees: req.body.fees,
+    frequency: req.body.frequency,
+    maxdiscount: req.body.maxdiscount,
+    comments: req.body.comments,
+    validuntil: req.body.validuntil,
+    neverexpires: req.body.neverexpires
+  })
+  plan
+    .save()
+    .then(result => {
+      if (res.session) {
+        console.log(req.session);
+      }
+      req.session.plan = result
+      console.log(result);
+      res.status(201).json({
+        message: "Created plan successfully",
+        createdPlan: {
+          _id: result._id,
+          name: result.name,
+          fees: result.fees,
+          request: {
+            type: 'GET',
+            url: "http://localhost:3001/plans/" + result._id
           }
-            req.session.plan = result
-            console.log(result);
-            res.status(201).json({
-              message: "Created plan successfully",
-              createdPlan: {
-                  _id: result._id,
-                  name: result.name,
-                  fees: result.fees,
-                  request: {
-                      type: 'GET',
-                      url: "http://localhost:3001/plans/" + result._id
-                  }
-              }
-            });
-          })
-        .catch(err => {
-          console.log(err);
-          res.status(500).json({
-            error: err
-          });
-        });
+        }
+      });
+    })
+    .catch(err => {
+      console.log(err);
+      res.status(500).json({
+        error: err
+      });
+    });
 };
-
 exports.plans_get_plan = (req, res, next) => {
     const id = req.params.planId;
     Plan.findById(id)
