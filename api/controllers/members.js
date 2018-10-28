@@ -1,6 +1,8 @@
 const mongoose = require("mongoose");
 const Member = require("../models/member");
 
+
+//comment here just foor hackotoberfest 
 exports.members_get_all = (req, res, next) => {
     Member.find()
     .select("name dateofbirth gender mobile email comments planid _id")
