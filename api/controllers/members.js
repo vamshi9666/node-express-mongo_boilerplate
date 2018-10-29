@@ -30,7 +30,6 @@ exports.members_get_all = (req, res, next) => {
           res.status(200).json(response);
     })
     .catch(err => {
-      console.log(err);
       res.status(500).json({
         error: err
       });
@@ -38,7 +37,6 @@ exports.members_get_all = (req, res, next) => {
 };
 
 exports.members_create_member = (req, res, next) => {
-    console.log(req.body);
     const member = new Member({
         name: req.body.name,
         dateofbirth: req.body.dateofbirth,
@@ -58,7 +56,6 @@ exports.members_create_member = (req, res, next) => {
       member
         .save()
         .then(result => {
-            console.log(result);
             res.status(201).json({
               message: "Created member successfully",
               createdMember: {
@@ -73,8 +70,7 @@ exports.members_create_member = (req, res, next) => {
               }
             });
           })
-        .catch(err => {
-          console.log(err);
+        .catch(err => {  
           res.status(500).json({
             error: err
           });
