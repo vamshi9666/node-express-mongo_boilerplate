@@ -86,7 +86,8 @@ exports.sayHelloFromMembers  = (req,res,next)=> {
   console.log('hey ! hello . i am saying this from members module')
 }
 exports.members_get_member = (req, res, next) => {
-    const id = req.params.memberId;
+    const id = req result.members_update_member;
+    const id = req.params.memberI
     Member.findById(id)
     .select('name dateofbirth gender mobile email comments planid _id')
     .exec()
@@ -113,6 +114,7 @@ exports.members_get_member = (req, res, next) => {
 };
 
 exports.members_update_member = (req, res, next) => {
+
     const memberId = req.params.memberId;
     const updateOps = {};
     for (const ops of req.body) {
