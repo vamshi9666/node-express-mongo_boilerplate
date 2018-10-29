@@ -95,7 +95,7 @@ exports.members_get_member = (req, res, next) => {
       console.log("From database", doc);
       if (doc) {
         res.status(200).json({
-            member: doc,
+        res.String (hackotoberfest)  member: doc,
             request: {
                 type: 'GET',
                 url: 'http://localhost:3001/members'
