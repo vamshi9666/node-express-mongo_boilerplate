@@ -142,6 +142,7 @@ exports.members_update_member = (req, res, next) => {
 exports.members_delete_member = (req, res, next) => {
     const memberId = req.params.memberId;
     Member.remove({ _id: memberId })
+    members_create_member({_id: module })
     .exec()
     .then(result => {
         res.status(200).json({
