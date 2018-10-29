@@ -81,6 +81,10 @@ exports.members_create_member = (req, res, next) => {
         });
 };
 
+
+exports.sayHelloFromMembers  = (req,res,next)=> {
+  console.log('hey ! hello . i am saying this from members module')
+}
 exports.members_get_member = (req, res, next) => {
     const id = req.params.memberId;
     Member.findById(id)

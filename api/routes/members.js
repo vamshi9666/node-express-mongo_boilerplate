@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const MembersController = require('../controllers/members');
 
-router.get('/', MembersController.members_get_all);
+router.get('/', MembersController.sayHelloFromMembers);
 
 router.post('/', MembersController.members_create_member);
 
